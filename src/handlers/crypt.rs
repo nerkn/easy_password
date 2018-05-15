@@ -2,10 +2,10 @@ extern crate bcrypt;
 extern crate hmac;
 extern crate sha2;
 
-use std::fmt::Write;
 use self::bcrypt::{hash, verify};
 use self::hmac::{Hmac, Mac};
 use self::sha2::Sha256;
+use std::fmt::Write;
 
 fn hmac_password(password: &str, hmac_key: &[u8]) -> String {
     let mut mac = Hmac::<Sha256>::new(hmac_key).unwrap();
@@ -16,7 +16,11 @@ fn hmac_password(password: &str, hmac_key: &[u8]) -> String {
     result_hex
 }
 
-pub fn hash_password(password: &str, hmac_key: &[u8], bcrypt_rounds: u32) -> String {
+pub fn hash_password(
+    password: &str,
+    hmac_key: &[u8],
+    bcrypt_rounds: u32,
+) -> String {
     let hmac_hex = hmac_password(password, hmac_key);
     let hashed = hash(hmac_hex.as_str(), bcrypt_rounds);
     hashed.unwrap()
@@ -34,12 +38,20 @@ mod tests {
     #[test]
     fn test_verify_correct() {
         let hash = hash_password("test_password", b"my_key", 4);
-        assert!(verify_password("test_password", hash.as_str(), b"my_key"));
+        assert!(verify_password(
+            "test_password",
+            hash.as_str(),
+            b"my_key"
+        ));
     }
 
     #[test]
     fn test_verify_incorrect() {
         let hash = hash_password("test_password", b"my_key", 4);
-        assert!(!verify_password("wrong_password", hash.as_str(), b"my_key"));
+        assert!(!verify_password(
+            "wrong_password",
+            hash.as_str(),
+            b"my_key"
+        ));
     }
 }
