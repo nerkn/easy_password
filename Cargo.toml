@@ -4,3 +4,6 @@ version = "0.1.0"
 authors = ["Chris Williams <chrispwill@gmail.com>"]
 
 [dependencies]
+hmac = "0.5"
+sha2 = "0.7"
+bcrypt = "0.2"
