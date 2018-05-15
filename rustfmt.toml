@@ -1,1 +1,12 @@
+force_multiline_blocks = true
+imports_indent = "Block"
+imports_layout = "HorizontalVertical"
+match_block_trailing_comma = true
 max_width = 80
+merge_imports = true
+normalize_comments = true
+reorder_impl_items = true
+report_todo = "Unnumbered"
+report_fixme = "Unnumbered"
+wrap_comments = true
+unstable_features = true

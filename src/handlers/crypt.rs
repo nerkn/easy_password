@@ -2,9 +2,11 @@ extern crate bcrypt;
 extern crate hmac;
 extern crate sha2;
 
-use self::bcrypt::{hash, verify};
-use self::hmac::{Hmac, Mac};
-use self::sha2::Sha256;
+use self::{
+    bcrypt::{hash, verify},
+    hmac::{Hmac, Mac},
+    sha2::Sha256,
+};
 use std::fmt::Write;
 
 fn hmac_password(password: &str, hmac_key: &[u8]) -> String {
