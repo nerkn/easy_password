@@ -26,6 +26,16 @@ fn hmac_password(
     Ok(result_hex)
 }
 
+/// HMAC and Bcrypt a password of any arbitrary length
+///
+/// # Examples
+///
+/// Usage:
+/// ```
+/// use easy_password::bcrypt::hash_password;
+///
+/// let hash = hash_password("my_password", b"secure_key", 12).unwrap();
+/// ```
 pub fn hash_password(
     password: &str,
     hmac_key: &[u8],
@@ -47,6 +57,18 @@ pub fn hash_password(
     }
 }
 
+/// HMAC and Bcrypt a password of any arbitrary length
+///
+/// # Examples
+///
+/// Usage:
+/// ```
+/// use easy_password::bcrypt::{hash_password, verify_password};
+///
+/// let hash = hash_password("my_password", b"secure_key", 12).unwrap();
+/// let result =
+///     verify_password("my_password", hash.as_str(), b"secure_key").unwrap();
+/// ```
 pub fn verify_password(
     password: &str,
     hashed: &str,
