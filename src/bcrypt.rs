@@ -2,11 +2,8 @@ extern crate bcrypt;
 extern crate hmac;
 extern crate sha2;
 
-use self::{
-    bcrypt::{hash, verify, BcryptError},
-    hmac::{crypto_mac::InvalidKeyLength, Hmac, Mac},
-    sha2::Sha256,
-};
+use self::{bcrypt::{hash, verify, BcryptError},
+           hmac::{Hmac, Mac, crypto_mac::InvalidKeyLength}, sha2::Sha256};
 use std::fmt::Write;
 
 #[derive(Debug, PartialEq)]
@@ -38,14 +35,14 @@ pub fn hash_password(
         Ok(result) => result,
         Err(InvalidKeyLength) => {
             return Err(PasswordError::InvalidKeyLength);
-        },
+        }
     };
     let hashed = hash(hmac_hex.as_str(), bcrypt_rounds);
     match hashed {
         Ok(result) => Ok(result),
         Err(BcryptError::CostNotAllowed(cost)) => {
             Err(PasswordError::CostNotAllowed(cost))
-        },
+        }
         Err(_) => panic!("Unexpected Bcrypt error."),
     }
 }
@@ -59,7 +56,7 @@ pub fn verify_password(
         Ok(result) => result,
         Err(InvalidKeyLength) => {
             return Err(PasswordError::InvalidKeyLength);
-        },
+        }
     };
     match verify(hmac_hex.as_str(), hashed) {
         Ok(bool) => Ok(bool),
@@ -68,7 +65,7 @@ pub fn verify_password(
         | Err(BcryptError::InvalidHash(_))
         | Err(BcryptError::InvalidBase64(_, _)) => {
             Err(PasswordError::InvalidHash(hashed.to_string()))
-        },
+        }
         Err(_) => panic!("Unexpected Bcrypt error."),
     }
 }
