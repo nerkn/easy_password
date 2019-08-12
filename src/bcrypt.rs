@@ -17,7 +17,7 @@ fn hmac_password(
     password: &str,
     hmac_key: &[u8],
 ) -> Result<String, InvalidKeyLength> {
-    let mut mac = Hmac::<Sha256>::new(hmac_key)?;
+    let mut mac = Hmac::<Sha256>::new_varkey(hmac_key)?;
     mac.input(password.as_bytes());
     let result = mac.result().code();
     let mut result_hex = String::new();
