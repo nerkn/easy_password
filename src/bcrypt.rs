@@ -2,8 +2,11 @@ extern crate bcrypt;
 extern crate hmac;
 extern crate sha2;
 
-use self::{bcrypt::{hash, verify, BcryptError},
-           hmac::{Hmac, Mac, crypto_mac::InvalidKeyLength}, sha2::Sha256};
+use self::{
+    bcrypt::{hash, verify, BcryptError},
+    hmac::{crypto_mac::InvalidKeyLength, Hmac, Mac},
+    sha2::Sha256,
+};
 use std::fmt::Write;
 
 #[derive(Debug, PartialEq)]
@@ -100,20 +103,16 @@ mod tests {
     fn test_verify_correct() {
         let hash = hash_password("test_password", b"my_key", 4)
             .expect("This should be a valid cost and hmac_key");
-        assert!(
-            verify_password("test_password", hash.as_str(), b"my_key")
-                .expect("Hash and hmac_key should be valid.")
-        );
+        assert!(verify_password("test_password", hash.as_str(), b"my_key")
+            .expect("Hash and hmac_key should be valid."));
     }
 
     #[test]
     fn test_verify_incorrect() {
         let hash = hash_password("test_password", b"my_key", 4)
             .expect("This should be a valid cost and hmac_key");
-        assert!(
-            !verify_password("wrong_password", hash.as_str(), b"my_key")
-                .expect("Hash and hmac_key should be valid.")
-        );
+        assert!(!verify_password("wrong_password", hash.as_str(), b"my_key")
+            .expect("Hash and hmac_key should be valid."));
     }
 
     #[test]
@@ -128,9 +127,7 @@ mod tests {
     fn test_invalid_hash() {
         assert_eq!(
             verify_password("wrong_password", "invalid_hash", b"my_key").err(),
-            Some(PasswordError::InvalidHash(
-                "invalid_hash".to_string()
-            )),
+            Some(PasswordError::InvalidHash("invalid_hash".to_string())),
         );
     }
 }
