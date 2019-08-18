@@ -56,7 +56,7 @@ pub fn hash_password(
         Err(BcryptError::CostNotAllowed(cost)) => {
             Err(PasswordError::CostNotAllowed(cost))
         }
-        Err(_) => panic!("Unexpected Bcrypt error."),
+        Err(error) => panic!("Unexpected Bcrypt error {}.", error),
     }
 }
 
@@ -91,7 +91,7 @@ pub fn verify_password(
         | Err(BcryptError::InvalidBase64(_, _)) => {
             Err(PasswordError::InvalidHash(hashed.to_string()))
         }
-        Err(_) => panic!("Unexpected Bcrypt error."),
+        Err(error) => panic!("Unexpected Bcrypt error {}.", error),
     }
 }
 

@@ -38,6 +38,21 @@ let success: bool =
     verify_password("test_password", hash.as_str(), b"secure_key").unwrap();
 ```
 
+Linting Code
+------------
+
+Install clippy:
+```
+rustup component add clippy
+```
+
+To lint the code:
+```
+cargo clippy
+```
+
+Apply all suggested refactorings (don't forget to reformat code)
+
 Formatting Code
 ---------------
 
