@@ -88,7 +88,7 @@ pub fn verify_password(
         Err(BcryptError::InvalidCost(_))
         | Err(BcryptError::InvalidPrefix(_))
         | Err(BcryptError::InvalidHash(_))
-        | Err(BcryptError::InvalidBase64(_, _)) => {
+        | Err(BcryptError::InvalidBase64(..)) => {
             Err(PasswordError::InvalidHash(hashed.to_string()))
         }
         Err(error) => panic!("Unexpected Bcrypt error {}.", error),
@@ -103,16 +103,20 @@ mod tests {
     fn test_verify_correct() {
         let hash = hash_password("test_password", b"my_key", 4)
             .expect("This should be a valid cost and hmac_key");
-        assert!(verify_password("test_password", hash.as_str(), b"my_key")
-            .expect("Hash and hmac_key should be valid."));
+        assert!(
+            verify_password("test_password", hash.as_str(), b"my_key")
+                .expect("Hash and hmac_key should be valid.")
+        );
     }
 
     #[test]
     fn test_verify_incorrect() {
         let hash = hash_password("test_password", b"my_key", 4)
             .expect("This should be a valid cost and hmac_key");
-        assert!(!verify_password("wrong_password", hash.as_str(), b"my_key")
-            .expect("Hash and hmac_key should be valid."));
+        assert!(
+            !verify_password("wrong_password", hash.as_str(), b"my_key")
+                .expect("Hash and hmac_key should be valid.")
+        );
     }
 
     #[test]
