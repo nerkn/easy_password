@@ -1,10 +1,15 @@
-Easy password hashing
+Updated Easy password hashing
+
+
 
 Supported algorithms:
 - Bcrypt
 
 Motivation
 ==========
+
+Orginal library (https://github.com/ChrisPWill/easy_password) wont compile so I cloned and updated libraries.
+
 Using Bcrypt as is results in passwords being limited to a length of 72. This
 means it's not easy to salt the password or support arbitrarily long user
 passwords.
@@ -38,36 +43,6 @@ let success: bool =
     verify_password("test_password", hash.as_str(), b"secure_key").unwrap();
 ```
 
-Linting Code
-------------
-
-Install clippy:
-```
-rustup component add clippy
-```
-
-To lint the code:
-```
-cargo clippy
-```
-
-Apply all suggested refactorings (don't forget to reformat code)
-
-Formatting Code
----------------
-
-Note: Currently the nightly version of rustfmt is used for formatting purposes only. The project
-itself is written and tested on the most current version of stable Rust.
-
-To install rustfmt:
-```
-rustup component add rustfmt --toolchain nightly
-```
-To format the code:
-```
-cargo +nightly fmt
-```
-
 License
 =======
-MIT License, see LICENSE
+MIT License
